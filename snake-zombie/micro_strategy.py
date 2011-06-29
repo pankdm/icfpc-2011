@@ -20,7 +20,7 @@ class MicroStrategy:
 
     def select_best_slot(self):
         def without_heal(func):
-            return str(func).find("heal") == -1
+            return str(func).find("help") == -1
 
         ind = [[], [], [], []]
         ind[0] = filter(lambda x: self.game.ar[self.first][x][0] > 0, range(256))
@@ -32,6 +32,8 @@ class MicroStrategy:
                 continue
             bt = ind[i][-1]
             write_to_log("BEST TARGET: %d" % bt)
+            if (self.game.moves_cnt == 0) and (bt == 255):
+                bt = 2
             return bt
 
     def attack_best_slot(self):
