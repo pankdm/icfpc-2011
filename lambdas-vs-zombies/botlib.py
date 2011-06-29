@@ -89,6 +89,11 @@ def get_from(slot):
     return res
 
 def execute(commands):
+    log = open("log.txt", "wt")
     for cmd in commands:
+        print >>log, "Making command: ", cmd
         apply(write_turn, cmd)
         read_turn()
+
+
+
