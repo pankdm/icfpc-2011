@@ -4,6 +4,12 @@
 from sys import argv, stderr, stdout
 from macro_strategy import MacroStrategy
 
+LIM_MB = 300
+MEGS = 2**20
+
+import resource
+resource.setrlimit(resource.RLIMIT_AS, (MEGS * LIM_MB, -1L))
+
 def read_turn():
     ar = []
     try:
