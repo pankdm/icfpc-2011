@@ -15,10 +15,24 @@ class MicroStrategy:
         self.heal_slot = 4       # CHECK DONE
         self.heal_func = ":)"    # CHECK DONE
         self.attack_func = ":)"  # CHECK DONE
+        self.zombie_func = ":)"  # CHECK DONE
+        self.a_z_func = ":)"     # CHECK DONE
         self.first = int(first)  #
         self.target_slot = 2     #
         self.attack_slot = 3     #
-        self.itr = 5             #
+        self.itr = 6             #
+        self.zombie_slot = 5     #
+
+    def make_zombie_cell(self):
+        zombie = []
+        zombie += parse_block("""
+        2 zombie
+        1 S
+        2 put
+        """)
+        zombie += compose([(1, "get")] + gen_fn(self.target_slot))
+        res = add_slot(self.zombie_slot, zombie)
+        return res
 
     def select_best_slot(self):
         def without_heal(func):
@@ -36,6 +50,7 @@ class MicroStrategy:
             write_to_log("BEST TARGET: %d" % bt)
             if (self.game.moves_cnt < 60) and (bt == 255):
                 bt = 2
+            #print >>stderr, self.game.ar[self.first][:5]
             return bt
         return 255
 
@@ -109,7 +124,7 @@ class MicroStrategy:
             if self.itr < 255:
                 self.itr += 1
 
-        if self.game.ar[1 - self.first][attack_slot][1] != self.attack_func:
+        if self.game.ar[1 - self.first][attack_slot][1] not in [self.a_z_func, self.attack_func]:
             #print >>stderr, "DEBUG: create attack_slot"
             attack = []
             attack += parse_block("""
@@ -126,6 +141,16 @@ class MicroStrategy:
 
             attack += compose( gen_fn(N_slot) )
             res += add_slot(attack_slot, attack)
+        if (self.using_zombie):
+            if self.game.ar[1 - self.first][attack_slot][1] != self.a_z_func:
+                za = []
+                za += parse_block("1 S\n")
+                za += compose([(1,"get")] + gen_fn(self.zombie_slot))
+                za += parse_block("""
+                1 S
+                2 I
+                """)
+                res += add_slot(attack_slot, za)
 
         res += add_slot(0, get_from(attack_slot))
         res.append((2, 0, "zero"))
@@ -202,14 +227,14 @@ class MicroStrategy:
         return res
 
 def gen_num2(a, b):
-    #print >>stderr, "GET_NUM", a, b
+    print >>stderr, "GET_NUM", a, b
     if a == ('I',):
         text = gen_num2(0, b)
         #print text
         return  [(2, 'zero')] + text
     if type(a) != type(42):
         text = gen_num2(0, b)
-        return  [(1, 'zero'), ('2 zero')] + text
+        return  [(1, 'zero'), (2, 'zero')] + text
     if a>b:
         text = gen_num2(0, b)
         return  [(1, 'zero'), (2, 'zero')] + text
@@ -227,7 +252,8 @@ def gen_num2(a, b):
 
     minstep = 0
     curh = {a : [] }
-    for i in range(1,30):
+    maxsteps=4+len(gen_num(b))
+    for i in range(1,maxsteps+1):
       nexth={}
       for k in curh.keys():
           if k + 1 <= b :
@@ -237,6 +263,7 @@ def gen_num2(a, b):
       if nexth.has_key(b) :
           return nexth[b]
       curh=nexth
+    return [(1,'zero'), (2, 'zero')] + gen_num2(0,b)
 
 
 

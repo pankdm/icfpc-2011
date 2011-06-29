@@ -184,6 +184,9 @@ class Game:
                             new_slot = self.simplify(new_slot, 0)
                     except:
                         new_slot = ("I",)
+                if sys.getsizeof(new_slot) > 100000:
+                    new_slot = ("I",)
+                    # f_ck you Mox Caml & coding monkeys
                 self.ar[self.cur_player][slot][1] = new_slot
         if self.player_cnt == 2:
             self.cur_player = 1 - self.cur_player

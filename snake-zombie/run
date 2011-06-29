@@ -39,6 +39,7 @@ if not first:
 
 for ar in macro_str.get_turn():
     #print >>stderr, "MAKING TURN:", ar
+    macro_str.checkForRevive()
     write_turn(*ar)
     macro_str.micro_str.game.make_turn(*ar)
     #macro_str.micro_str.game.show_state()
