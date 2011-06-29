@@ -1,0 +1,27 @@
+Snakes vs. Lambdas
+==================
+
+This bot has the following features:
+
+1) Brain, i.e. emulator that computes the current situation after each move. Some teams try to break it using memory
+   leaks, we try to avoid it.
+
+2) The algorithm is the following cycle:
+   a) "Infinite" healing of the first slot. "Infinite" means that we use recursion for healing, and if there were no
+      restriction for application counts, then we would heal forever. We store our healing function in another slot,
+	  so the second healing will be faster. But we check if our healing function is damaged and if yes, we rebuild it.
+   b) Two early attacks (the first attacks are on 64 and 70 moves, we think it is pretty fast). We choose "the best"
+      enemy slot and attack it and it's neighbour. Again, our function is stored and rebuiled if neccesary.
+
+3) Also if our enemy revives his slots, we begin to use zombies that do nothing, but they overwrite enemies functions
+   in their dead slots.
+
+4) Our first 5 slots are very important for us, because they contain neccesary functions and numbers. We check if they
+   are dead, and if yes, we revive them and rebuild their contents.
+
+Team members:
+Alexey Tarasov
+Dmitriy Panin
+Oleg Gritsenko
+Alexey Shagraev
+Veniamin Blinov

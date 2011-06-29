@@ -1,0 +1,43 @@
+#!/usr/bin/python
+
+from sys import argv, stderr, stdout
+from macro_strategy import MacroStrategy
+
+LIM_MB = 300
+MEGS = 2**20
+
+import resource
+resource.setrlimit(resource.RLIMIT_AS, (MEGS * LIM_MB, -1L))
+
+
+def read_turn():
+    ar = []
+    try:
+        for i in xrange(3):
+            ar.append(raw_input().strip("\n"))
+    except EOFError:
+        exit()
+    ar[0] = int(ar[0])
+    ar[3 - ar[0]] = int(ar[3 - ar[0]])
+    macro_str.micro_str.game.make_turn(*ar)
+
+def write_turn(a1, a2, a3):
+    print a1
+    print a2
+    print a3
+    stdout.flush()
+
+first = True
+if argv[1] == '1':
+    first = False
+
+macro_str = MacroStrategy(first)
+
+if not first:
+    read_turn()
+
+for ar in macro_str.get_turn():
+    macro_str.checkForRevive()
+    write_turn(*ar)
+    macro_str.micro_str.game.make_turn(*ar)
+    read_turn()
