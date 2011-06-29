@@ -10,5 +10,6 @@ class MacroStrategy:
         #for i in xrange(2):
             for ar in self.micro_str.heal():
                 yield ar
+            self.micro_str.heal_func = self.micro_str.game.ar[1 - self.micro_str.first][self.micro_str.heal_slot][1]
             for ar in self.micro_str.attack_best_slot():
                 yield ar

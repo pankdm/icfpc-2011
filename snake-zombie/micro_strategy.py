@@ -10,13 +10,13 @@ def write_to_log(s):
 class MicroStrategy:
     def __init__(self, first = True):
         self.game = Game()
-        self.N_slot = 1
-        self.heal_slot = 4
-        self.heal_func = ":)"
-        self.first = int(first)
-        self.target_slot = 2
-        self.attack_slot = 0
-        self.tmp = 0
+        self.N_slot = 1          # CHECK DONE
+        self.heal_slot = 4       # CHECK DONE
+        self.heal_func = ":)"    # CHECK DONE
+        self.first = int(first)  #
+        self.target_slot = 2     #
+        self.attack_slot = 0     #
+        self.itr = 5             #
 
     def select_best_slot(self):
         def without_heal(func):
@@ -37,6 +37,7 @@ class MicroStrategy:
             return bt
 
     def attack_best_slot(self):
+        NNN = 2**13
         res = []
         attack = []
         attack += parse_block("""
@@ -47,6 +48,24 @@ class MicroStrategy:
         attack_slot = self.attack_slot
         N_slot = self.N_slot # TODO: if it is dead
         target_slot = self.target_slot  # TODO: if it is dead
+
+        if self.game.ar[1 - self.first][N_slot][0] <= 0:
+            while self.game.ar[1 - self.first][self.itr][0] <= 0:
+                self.itr += 1
+            N_slot = self.itr
+            self.N_slot = self.itr
+            self.itr += 1
+
+        if self.game.ar[1 - self.first][N_slot][1] not in [2 * NNN]:
+            res += add_slot(N_slot, gen_num(2 * NNN))
+
+        if self.game.ar[1 - self.first][target_slot][0] <= 0:
+            while self.game.ar[1 - self.first][self.itr][0] <= 0:
+                self.itr += 1
+            target_slot = self.itr
+            self.target_slot = self.itr
+            self.itr += 1
+
         best_target = 255 - self.select_best_slot()
         res.append((1, "zero", target_slot))
         res += add_slot(target_slot, gen_num(best_target))
@@ -67,8 +86,22 @@ class MicroStrategy:
         N_slot = self.N_slot
         heal_slot = self.heal_slot
 
+        if self.game.ar[1 - self.first][N_slot][0] <= 0:
+            while self.game.ar[1 - self.first][self.itr][0] <= 0:
+                self.itr += 1
+            N_slot = self.itr
+            self.N_slot = self.itr
+            self.itr += 1
+
         if self.game.ar[1 - self.first][N_slot][1] not in [NNN, 2 * NNN]:
             res += add_slot(N_slot, gen_num(NNN))
+
+        if self.game.ar[1 - self.first][heal_slot][0] <= 0:
+            while self.game.ar[1 - self.first][self.itr][0] <= 0:
+                self.itr += 1
+            heal_slot = self.itr
+            self.heal_slot = self.itr
+            self.itr += 1
 
         if self.game.ar[1 - self.first][heal_slot][1] != self.heal_func:
             heal = []
@@ -85,7 +118,7 @@ class MicroStrategy:
             2 I
             """)
             res += add_slot(heal_slot, heal)
-            self.heal_func = ('S', ('S', ('S', ('K', ('S', ('K', ('help', 'zero', 'zero')), 'get')), 'succ'), 'get'), 'I')
+            #self.heal_func = ('S', ('S', ('S', ('K', ('S', ('K', ('help', 'zero', 'zero')), 'get')), 'succ'), 'get'), 'I')
         res += add_slot(0, get_from(heal_slot) )
         res.append((2, 0, "zero"))
         if self.game.ar[1 - self.first][N_slot][1] != 2 * NNN:
