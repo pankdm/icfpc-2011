@@ -1,5 +1,6 @@
 from ltg_emulator import Game
 from sys import stderr
+from random import randint
 
 def write_to_log(s):
     return
@@ -13,9 +14,10 @@ class MicroStrategy:
         self.N_slot = 1          # CHECK DONE
         self.heal_slot = 4       # CHECK DONE
         self.heal_func = ":)"    # CHECK DONE
+        self.attack_func = ":)"  # CHECK DONE
         self.first = int(first)  #
         self.target_slot = 2     #
-        self.attack_slot = 0     #
+        self.attack_slot = 3     #
         self.itr = 5             #
 
     def select_best_slot(self):
@@ -35,49 +37,103 @@ class MicroStrategy:
             if (self.game.moves_cnt == 0) and (bt == 255):
                 bt = 2
             return bt
+        return 255
+
+    def ressurect(self, k):
+        #print >>stderr, "DEBUG: reviving", k
+        #print >>stderr, self.itr
+        while (self.game.ar[1 - self.first][self.itr][0] <= 0) and (self.itr < 254):
+            self.itr += 1
+            #print >>stderr, self.itr
+
+        revive = gen_num(k)
+        revive += parse_block("""
+        1 revive
+        """)
+        res = add_slot(self.itr, revive)
+        return res
 
     def attack_best_slot(self):
         NNN = 2**13
         res = []
-        attack = []
-        attack += parse_block("""
-        2 attack
-        2 zero
-        """)
 
         attack_slot = self.attack_slot
-        N_slot = self.N_slot # TODO: if it is dead
-        target_slot = self.target_slot  # TODO: if it is dead
+        N_slot = self.N_slot
+        target_slot = self.target_slot
 
         if self.game.ar[1 - self.first][N_slot][0] <= 0:
-            while self.game.ar[1 - self.first][self.itr][0] <= 0:
+            #print >>stderr, "DEBUG: reviving N_slot"
+            #print >>stderr, self.itr
+            while (self.game.ar[1 - self.first][self.itr][0] <= 0) and (self.itr < 254):
                 self.itr += 1
-            N_slot = self.itr
-            self.N_slot = self.itr
-            self.itr += 1
-
-        if self.game.ar[1 - self.first][N_slot][1] not in [2 * NNN]:
-            res += add_slot(N_slot, gen_num(2 * NNN))
+                #print >>stderr, self.itr
+            revive = parse_block("""
+            2 zero
+            1 succ
+            1 revive
+            """)
+            res += add_slot(self.itr, revive)
 
         if self.game.ar[1 - self.first][target_slot][0] <= 0:
-            while self.game.ar[1 - self.first][self.itr][0] <= 0:
+            #print >>stderr, "DEBUG: reviving target_slot"
+            while (self.game.ar[1 - self.first][self.itr][0] <= 0) and (self.itr < 254):
                 self.itr += 1
-            target_slot = self.itr
-            self.target_slot = self.itr
-            self.itr += 1
+            revive = parse_block("""
+            2 zero
+            1 succ
+            1 succ
+            1 revive
+            """)
+            res += add_slot(self.itr, revive)
 
         best_target = 255 - self.select_best_slot()
-        res.append((1, "zero", target_slot))
+        res += [(1, "zero", target_slot)]  #TODO: gen_num
         res += add_slot(target_slot, gen_num(best_target))
-        attack += compose([(1, "get")] + gen_fn(target_slot))
-        attack += parse_block("2 zero")
+        tmp = self.game.ar[1 - self.first][N_slot][1]
+        if (tmp < 11000) or (tmp > 17000):
+            #print >>stderr, "DEBUG: create N_slot"
+            res += [(1, "zero", N_slot)]
+            res += add_slot(N_slot, gen_num(NNN))
+            #res += add_slot(N_slot, gen_num(best_target))
+            #res += add_slot(target_slot, get_from(N_slot))
+            #res += add_slot(N_slot, parse_block("1 dbl\n" * 6))
 
-        attack += compose([(1, "get")] + gen_fn(N_slot))
-        attack += parse_block("2 zero")
+        if self.game.ar[1 - self.first][attack_slot][0] <= 0:
+            #print >>stderr, "DEBUG: moving attack_slot"
+            while (self.game.ar[1 - self.first][self.itr][0] <= 0) and (self.itr < 254):
+                self.itr += 1
+            attack_slot = self.itr
+            self.attack_slot = self.itr
+            if self.itr < 255:
+                self.itr += 1
 
-        res += add_slot(attack_slot, attack)
+        if self.game.ar[1 - self.first][attack_slot][1] != self.attack_func:
+            #print >>stderr, "DEBUG: create attack_slot"
+            attack = []
+            attack += parse_block("""
+            2 attack
+            2 zero
+            """)
 
-        #res.append((2, 0, "zero"))
+            # assert target_slot = N_slot + 1
+            attack += compose( [(1, "get")] + gen_fn(1) )
+            attack += parse_block("""
+            1 S
+            2 get
+            """)
+
+            attack += compose( gen_fn(N_slot) )
+            res += add_slot(attack_slot, attack)
+
+        res += add_slot(0, get_from(attack_slot))
+        res.append((2, 0, "zero"))
+
+        if target_slot < 255:
+            res += add_slot(target_slot, [(1, "succ")])
+
+            res += add_slot(0, get_from(attack_slot))
+            res.append((2, 0, "zero"))
+
         return res
 
     def heal(self):
@@ -85,25 +141,39 @@ class MicroStrategy:
         res = []
         N_slot = self.N_slot
         heal_slot = self.heal_slot
+        target_slot = self.target_slot
 
         if self.game.ar[1 - self.first][N_slot][0] <= 0:
-            while self.game.ar[1 - self.first][self.itr][0] <= 0:
+            #print >>stderr, "DEBUG heal: reviving N_slot"
+            while (self.game.ar[1 - self.first][self.itr][0] <= 0) and (self.itr < 254):
                 self.itr += 1
-            N_slot = self.itr
-            self.N_slot = self.itr
-            self.itr += 1
+            revive = parse_block("""
+            2 zero
+            1 succ
+            1 revive
+            """)
+            res += add_slot(self.itr, revive)
 
-        if self.game.ar[1 - self.first][N_slot][1] not in [NNN, 2 * NNN]:
-            res += add_slot(N_slot, gen_num(NNN))
+        tmp = self.game.ar[1 - self.first][N_slot][1]
+        if (tmp < 8000) or (tmp > 17000):
+            #print >>stderr, "DEBUG heal: create N_slot"
+            res += [(1, "zero", N_slot)]
+            #res += add_slot(N_slot, gen_num(NNN))
+            res += add_slot(N_slot, gen_num(252))
+            res += add_slot(target_slot, get_from(N_slot))
+            res += add_slot(N_slot, parse_block("1 dbl\n" * 5))
 
         if self.game.ar[1 - self.first][heal_slot][0] <= 0:
-            while self.game.ar[1 - self.first][self.itr][0] <= 0:
+            #print >>stderr, "DEBUG heal: move heal_slot"
+            while (self.game.ar[1 - self.first][self.itr][0] <= 0) and (self.itr < 254):
                 self.itr += 1
             heal_slot = self.itr
             self.heal_slot = self.itr
-            self.itr += 1
+            if self.itr < 255:
+                self.itr += 1
 
         if self.game.ar[1 - self.first][heal_slot][1] != self.heal_func:
+            #print >>stderr, "DEBUG heal: create heal_slot"
             heal = []
             heal += parse_block("""
             2 help
@@ -118,7 +188,7 @@ class MicroStrategy:
             2 I
             """)
             res += add_slot(heal_slot, heal)
-            #self.heal_func = ('S', ('S', ('S', ('K', ('S', ('K', ('help', 'zero', 'zero')), 'get')), 'succ'), 'get'), 'I')
+
         res += add_slot(0, get_from(heal_slot) )
         res.append((2, 0, "zero"))
         if self.game.ar[1 - self.first][N_slot][1] != 2 * NNN:
