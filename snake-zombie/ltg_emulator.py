@@ -118,9 +118,13 @@ class Game:
             sn = self.simplify(v[1], zomb)
             return self.ar[1 - self.cur_player][sn][1]
         if fn == "revive":
+            #print >>sys.stderr, "REVIVING", v
             sn = self.simplify(v[1], zomb)
+            #print >>sys.stderr, "REVIVING", sn
             if self.ar[self.cur_player][sn][0] <= 0:
+                #print >>sys.stderr, "REVIVING", sn, self.ar[self.cur_player][sn]
                 self.ar[self.cur_player][sn][0] = 1
+                #print >>sys.stderr, "REVIVING", sn, self.ar[self.cur_player][sn]
             return ("I",)
         if fn == "zombie":
             i = self.simplify(v[1], zomb)
@@ -149,7 +153,7 @@ class Game:
                 self.simplify(self.ar[self.cur_player][i][1] + (("I",),), 1)
             except:
                 pass
-            self.ar[self.cur_player][i] = (0, ("I",))
+            self.ar[self.cur_player][i] = [0, ("I",)]
 
     def make_turn(self, lr, arg1, arg2):
         self.zombies_coming()
@@ -197,7 +201,9 @@ class Game:
             print >>sys.stderr, i, "player:"
             for j in xrange(256):
                 if (self.ar[i][j][1] != ("I",)) or (self.ar[i][j][0] != 10000):
-                    print >>sys.stderr, "%d={%d,%s}" % (j, self.ar[i][j][0], str(self.ar[i][j][1]))
+                    print >>sys.stderr, "%d=%s" % (j, self.ar[i][j])
+                if type(self.ar[i][j]) == type(()):
+                    print >>sys.stderr, "ZOMFG!!!1"
 
 #game = Game(1)
 #game.make_turn(2, 0, "help")

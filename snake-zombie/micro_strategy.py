@@ -34,7 +34,7 @@ class MicroStrategy:
                 continue
             bt = ind[i][-1]
             write_to_log("BEST TARGET: %d" % bt)
-            if (self.game.moves_cnt == 0) and (bt == 255):
+            if (self.game.moves_cnt < 60) and (bt == 255):
                 bt = 2
             return bt
         return 255
@@ -87,13 +87,15 @@ class MicroStrategy:
             res += add_slot(self.itr, revive)
 
         best_target = 255 - self.select_best_slot()
-        res += [(1, "zero", target_slot)]  #TODO: gen_num
-        res += add_slot(target_slot, gen_num(best_target))
+        #res += [(1, "zero", target_slot)]
+        res += add_slot(target_slot, gen_num2(self.game.ar[1-self.first][target_slot][1],best_target))
         tmp = self.game.ar[1 - self.first][N_slot][1]
-        if (tmp < 11000) or (tmp > 17000):
+        if (type(tmp) != type(42)) or (tmp < 11000) or (tmp > 17000):
             #print >>stderr, "DEBUG: create N_slot"
-            res += [(1, "zero", N_slot)]
-            res += add_slot(N_slot, gen_num(NNN))
+            #res += [(1, "zero", N_slot)]
+            gn = gen_num2(tmp, NNN)
+            #print >>stderr, gn
+            res += add_slot(N_slot, gn)
             #res += add_slot(N_slot, gen_num(best_target))
             #res += add_slot(target_slot, get_from(N_slot))
             #res += add_slot(N_slot, parse_block("1 dbl\n" * 6))
@@ -155,13 +157,17 @@ class MicroStrategy:
             res += add_slot(self.itr, revive)
 
         tmp = self.game.ar[1 - self.first][N_slot][1]
-        if (tmp < 8000) or (tmp > 17000):
+        if (type(tmp) != type(42)) or (tmp < 8000) or (tmp > 17000):
             #print >>stderr, "DEBUG heal: create N_slot"
             res += [(1, "zero", N_slot)]
             #res += add_slot(N_slot, gen_num(NNN))
-            res += add_slot(N_slot, gen_num(252))
-            res += add_slot(target_slot, get_from(N_slot))
-            res += add_slot(N_slot, parse_block("1 dbl\n" * 5))
+            tmp2 = self.game.ar[1-self.first][target_slot][1]
+            if self.game.moves_cnt <40:
+                res += add_slot(N_slot, gen_num(252))
+                res += add_slot(target_slot, get_from(N_slot))
+                res += add_slot(N_slot, parse_block("1 dbl\n" * 5))
+            else :
+                res += add_slot(N_slot, gen_num2(tmp,10000))
 
         if self.game.ar[1 - self.first][heal_slot][0] <= 0:
             #print >>stderr, "DEBUG heal: move heal_slot"
@@ -191,9 +197,48 @@ class MicroStrategy:
 
         res += add_slot(0, get_from(heal_slot) )
         res.append((2, 0, "zero"))
-        if self.game.ar[1 - self.first][N_slot][1] != 2 * NNN:
+        if self.game.ar[1 - self.first][N_slot][1] < 15000:
             res += add_slot(N_slot, parse_block("1 dbl"))
         return res
+
+def gen_num2(a, b):
+    #print >>stderr, "GET_NUM", a, b
+    if a == ('I',):
+        text = gen_num2(0, b)
+        #print text
+        return  [(2, 'zero')] + text
+    if type(a) != type(42):
+        text = gen_num2(0, b)
+        return  [(1, 'zero'), ('2 zero')] + text
+    if a>b:
+        text = gen_num2(0, b)
+        return  [(1, 'zero'), (2, 'zero')] + text
+    if a==b:
+        return []
+    if b > 1000:
+        text=[]
+        if  a==0:
+            a+=1
+            text = [(1, 'succ')]
+        while a<b:
+            a*=2
+            text = text + [(1, 'dbl')]
+        return text
+
+    minstep = 0
+    curh = {a : [] }
+    for i in range(1,30):
+      nexth={}
+      for k in curh.keys():
+          if k + 1 <= b :
+              nexth[k + 1] = curh[k] + [(1, "succ") ]
+          if 2 * k <= b :
+              nexth[2 * k] = curh[k] + [(1,"dbl")]
+      if nexth.has_key(b) :
+          return nexth[b]
+      curh=nexth
+
+
 
 def gen_num(n):
     n = int(n)
