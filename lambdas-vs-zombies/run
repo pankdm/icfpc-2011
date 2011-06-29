@@ -109,11 +109,11 @@ res += add_slot(target_slot, gen_num(255 - killstart))
 if debug: print >> stderr, "have number", 255 - killstart, ' at ', len(res)
 
 ## create zombie 
-zombie = [] 
+zombie = []
 zombie += parse_block("""
 2 zombie
 1 S
-2 get 
+2 put
 """)
 
 zombie += compose( [(1, "get")] +  gen_fn(target_slot) )
