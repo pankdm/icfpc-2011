@@ -1,0 +1,31 @@
+Ranking Score   Team number Team name
+1   301 49  Eta-Long Normal Form
+2   300 182 Unagi: The Gathering
+3   281 11  atomic $ save Madoka
+4   262 129 Punch Jordan in the Face
+5   243 51  Frictionless Bananas
+6   228 140 shinh3
+7   226 192 Wile E.
+8   222 193 Wolf
+9   214 81  Joho
+10  172 171 The Invisible Imp
+11  160 191 widecat
+12  142 159 TBD
+13  134 196 yazDual5os
+14  128 26  Ciklum
+15  124 13  Bastard (aka Code Cercopithecoids)
+16  120 175 THIRTEEN
+17  119 146 Snakes vs Lambdas
+18  118 46  dylan-hackers
+19  103 152 St. Mihailov Academy
+20  102 18  bootspig
+21  100 102 Lyrical Tokarev
+22  98  25  Celestial Dire Badger
+23  90  135 Ria Mitsuru
+24  87  27  Coding Monkeys
+25  80  1   6/11/2011
+25  80  90  kstm.org
+27  72  115 notogawa
+28  64  35  Cup<T>
+29  62  111 nbu
+30  48  97  lessismore

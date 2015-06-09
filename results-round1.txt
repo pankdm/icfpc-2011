@@ -1,0 +1,200 @@
+Ranking Score   Team number Team name
+1   1164    182 Unagi: The Gathering
+2   1138    49  Eta-Long Normal Form
+3   1133    51  Frictionless Bananas
+4   1131    11  atomic $ save Madoka
+5   1104    129 Punch Jordan in the Face
+6   1084    192 Wile E.
+6   1084    193 Wolf
+8   1061    140 shinh3
+9   1046    81  Joho
+10  1025    196 yazDual5os
+11  1021    159 TBD
+12  1017    171 The Invisible Imp
+13  987 152 St. Mihailov Academy
+14  958 13  Bastard (aka Code Cercopithecoids)
+15  950 146 Snakes vs Lambdas
+16  939 18  bootspig
+17  930 25  Celestial Dire Badger
+18  906 46  dylan-hackers
+19  905 26  Ciklum
+20  900 135 Ria Mitsuru
+21  895 111 nbu
+22  893 1   6/11/2011
+23  891 191 widecat
+24  890 102 Lyrical Tokarev
+25  880 175 THIRTEEN
+26  875 27  Coding Monkeys
+27  867 35  Cup<T>
+28  842 90  kstm.org
+28  842 115 notogawa
+30  832 97  lessismore
+31  821 148 solo r6
+32  820 134 Rhope Burn
+33  818 172 The SKI is the limit
+34  817 141 Side Effects May Include...
+35  814 89  KoKaml
+36  812 55  Funktion im Kopf der Mensch
+37  807 34  Cult of the Bound Variable
+38  806 52  fried_shrimp
+39  801 77  Intelliarts
+40  788 80  jk
+41  787 12  Bad Science
+42  786 39  d5
+43  771 131 Raczwen
+44  756 127 PrimitiveRecursion
+45  752 138 Scaramuccia
+46  741 110 Mox Caml
+47  711 163 Team Meh
+48  709 30  consalot
+49  697 178 ube
+50  695 124 Platinum Angel
+51  673 78  jabber.ru
+52  664 23  capuche
+53  660 84  Kharkov-Chita
+54  647 176 TJOR
+55  646 91  kt3k
+55  646 98  loopbreakers
+57  643 33  Croco
+58  630 103 Magic Missiles
+59  628 85  kik
+60  608 67  Hiromi Ayase
+61  597 168 The Cat is #1!!
+62  594 158 taxidriver
+63  583 42  Dee_Mon
+63  583 56  Futamura Rejection
+65  581 177 Trup 16
+66  575 69  hotpotters
+67  573 50  f(this)
+68  558 9   Aristroids
+69  553 179 ubivator
+70  551 14  BearsAteOurBrains
+71  545 107 Misa_k
+72  539 112 nickie
+73  538 183 United Coding Team
+74  507 139 ShallowEndians
+75  482 195 yarunee
+76  475 170 The Higher Order Of Zeuxis
+77  470 133 RecursiveZombies
+77  470 197 Yeast Combinator
+79  453 184 Ural nerds
+80  438 37  Cyborg Cats Riding Velociraptor Dragons
+80  438 185 utmc
+82  420 3   aafa
+82  420 65  hi, team
+84  408 190 wherearemylegs
+85  407 62  Half-Life
+86  406 188 VZ_brothers
+87  404 189 wheezards
+88  403 167 The Caml Riders
+89  402 36  cw
+90  397 150 sski
+91  386 71  I heard you like functions
+92  384 143 Sir Bedevere the Wise
+93  383 38  d40
+94  382 130 quork
+95  381 180 ucla math
+96  374 142 sigmund
+97  363 54  FunApplication
+98  362 70  hsh 2011
+99  357 16  BoBeTai
+100 353 83  Kharkiv Minds
+101 349 199 λizards of the
+102 346 57  GandalfTheGay
+103 345 31  CopyKawaii
+104 344 116 nublo
+105 342 153 Stanfy+
+105 342 165 TeamSampou
+107 341 20  Bunda
+107 341 94  lambdamonkey
+109 327 118 OpenDunga
+110 320 162 Team K&R
+111 318 17  bokesan
+112 312 76  iHarcoreYou
+113 309 8   amanous
+113 309 58  Gill
+115 305 151 SSS(SSS)(SSS)
+116 304 73  ICLambdas
+117 303 132 raging mushrooms
+118 299 5   ah!
+118 299 149 spb-archlinux
+118 299 187 vsg
+121 298 72  IC Robotics
+122 294 44  Dreamer_other
+123 292 137 rzn
+124 290 92  Lambda Lambda Kurgan - There can only be one.
+125 288 48  Error 404
+126 286 194 X3(hz)
+127 277 161 Team #mathematics
+128 275 174 The Usual Suspects
+129 273 186 vbdb
+130 272 164 Team Spikey2
+131 271 40  darchon
+132 268 155 swizard
+133 264 121 ozy4dm
+133 264 166 The Blind Hen
+135 263 43  Dharma VS Miko
+136 260 21  BZIP
+137 258 32  Crazy
+138 254 64  help-I-succ
+139 246 95  Lambda-UC
+140 244 2   ((call/cc call/cc) (call/cc call/cc))
+140 244 147 SOHMENS
+142 242 24  cashto
+143 232 157 Tangent
+144 229 181 uguu.org
+145 226 59  glhf
+146 216 22  Camelimelo
+146 216 108 mmm
+148 212 45  Duel Fighter Arekuma
+149 206 154 SugarSun
+150 205 87  killatron
+151 202 15  BL4Z3U5
+152 199 105 max630
+153 185 156 SzM
+154 179 169 The Church of the Least Fixed Point
+155 176 125 pluk
+156 173 101 Lukasiewicz
+156 173 144 SKIfun
+158 160 96  LBTeam
+159 156 75  iga-shindouekimae
+159 156 198 YtG
+161 154 63  hatsunetsu
+162 153 123 ParseError
+163 152 100 LoveMachine
+164 147 61  Hacking in the Rain
+165 146 114 notechobot
+166 144 126 polly
+167 142 53  fujiyama
+168 140 4   Agent Cooper
+169 135 113 NoobTeam
+170 132 10  ark
+171 127 68  hitechlab
+172 122 106 mcdonalds
+173 121 117 Omega
+174 117 7   ALPHA Team
+174 117 28  CompMagic
+174 117 145 Skobochka
+177 113 60  Goto 11
+178 112 109 Mostly Harmless
+179 108 119 Ostap Bender
+180 107 104 marcel
+181 105 136 ryspb
+182 100 120 Outer Products from Inner Space
+183 99  47  Eger a marson
+184 97  99  Lost In Space
+185 92  66  HiCapacity.org
+186 91  82  K85A
+186 91  93  LambdaGummyBear
+188 80  160 team
+189 72  173 The Unchecked Exceptions
+190 71  122 paolini
+191 70  29  Computational Playing Style
+192 68  74  IDKJava
+193 67  86  KikooLol
+194 65  128 Puer Magi Malum Mandens
+195 52  41  dark onion
+196 50  88  KISS
+197 26  79  jeu
+198 16  6   Alias
+199 0   19  brogrammers
